@@ -4,7 +4,6 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { User, UserSchema } from './schemas/user.schema';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -12,7 +11,7 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
     JwtModule
   ],
   controllers: [UsersController],
-  providers: [UsersService, JwtAuthGuard],
-  exports: [JwtAuthGuard],
+  providers: [UsersService],
+  exports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])]
 })
 export class UsersModule { }

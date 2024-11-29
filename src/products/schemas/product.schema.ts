@@ -20,7 +20,7 @@ export class Product {
     @Prop()
     category: string;
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
     createdBy: User;
 }
 
