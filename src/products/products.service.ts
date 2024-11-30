@@ -23,8 +23,8 @@ export class ProductsService {
     return this.productModel.find().populate('createdBy');
   }
 
-  findOne(id: string): Promise<Product> {
-    const product = this.productModel.findById(id).populate('createdBy');
+  async findOne(id: string): Promise<Product> {
+    const product = await this.productModel.findById(id).populate('createdBy');
     if (!product) {
       throw new NotFoundException('Product not found');
     }
