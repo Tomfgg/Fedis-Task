@@ -6,7 +6,7 @@ import * as mongoose from 'mongoose';
 export class MongoIdGuard implements CanActivate {
     canActivate(context: ExecutionContext): boolean {
         const request = context.switchToHttp().getRequest();
-        const { id } = request.params; // or request.query, depending on where the ID is passed
+        const { id } = request.params;
 
         if (!mongoose.isValidObjectId(id)) {
             throw new BadRequestException('Invalid ID format');

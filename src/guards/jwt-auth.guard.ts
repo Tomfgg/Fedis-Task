@@ -1,5 +1,4 @@
-// src/common/guards/jwt-auth.guard.ts
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
@@ -36,7 +35,9 @@ export class JwtAuthGuard implements CanActivate {
             request.user = user;
             return true;
         } catch (error) {
-            throw new UnauthorizedException('Invalid or expired token');
+            if (!(error instanceof HttpException)) {
+                throw new UnauthorizedException('Invalid or expired token');
+            }
         }
     }
 }

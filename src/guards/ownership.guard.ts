@@ -1,4 +1,3 @@
-// src/common/guards/ownership.guard.ts
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { ProductsService } from '../products/products.service';
 
@@ -10,10 +9,9 @@ export class OwnershipGuard implements CanActivate {
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
-        const user = request.user; // Assume the user is already authenticated
-        const productId = request.params.id; // Example of retrieving `id` from route parameters
+        const user = request.user;
+        const productId = request.params.id;
 
-        // Delegate ownership check to the service
         await this.productsService.validateOwnership(user._id.toString(), productId);
 
         return true;

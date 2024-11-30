@@ -26,7 +26,7 @@ export class UsersService {
     return createduser;
   }
 
-  async login(loginDto: LoginDto) {
+  async login(loginDto: LoginDto): Promise<{ token: string }> {
     const { email, password } = loginDto
     const user = await this.userModel.findOne({ email }).select('+password')
     if (!user || !user.password || !(await bcrypt.compare(password, user.password))) {
@@ -34,9 +34,10 @@ export class UsersService {
     }
     const payload = { id: user._id };
     const jwtSecret = this.configService.get<string>('JWT_SECRET');
-    const token = this.jwtService.sign(payload, { secret: jwtSecret, expiresIn: '1h' });
+    const token = this.jwtService.sign(payload, { secret: jwtSecret, expiresIn: '1d' });
     return { token };
   }
+
   async findById(id: string): Promise<User> {
     const user = await this.userModel.findById(id);
     if (!user) {
