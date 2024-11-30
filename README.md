@@ -31,7 +31,7 @@ cp .env.tmp .env
 
 7. Start the development server:
     ```bash
-    npm run start
+    npm run start:dev
     ```
 
 ## License
